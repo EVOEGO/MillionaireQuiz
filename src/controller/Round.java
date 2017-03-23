@@ -14,7 +14,7 @@ public class Round
         ArrayList<String> quizAnswers = new ArrayList<String>();
         AttributeDataBase finalGame = new AttributeDataBase();
 
-        String correctAnswer = " ";
+        String correctAnswer = " "; // rst
 
         quizAnswers.add(attributes.getAnswer());
         quizAnswers.add(attributes.getIncorrect1());
