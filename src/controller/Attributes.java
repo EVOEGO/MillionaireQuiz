@@ -11,7 +11,7 @@ public class Attributes
     private String incorrect2;
     private String incorrect3;
     private String difficulty;
-    private ArrayList<String> quiz;
+   // private ArrayList<String> quiz;
     //the file varaibles that i will use when reading in the file
 
 
@@ -93,8 +93,9 @@ public class Attributes
 
     public String toString()
     {
-        return this.question+"\n"+this.answer+"\n"+this.incorrect1+"\n"+this.incorrect2+"\n"+this.incorrect3+"\n";
+        return this.question+"\n"+ this.answer+"\n"+ this.incorrect1+"\n"+ this.incorrect2+"\n"+ this.incorrect3+"\n";
     }
+
 
 
     //this is my toString method

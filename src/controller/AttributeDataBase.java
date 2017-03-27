@@ -152,11 +152,11 @@ public class AttributeDataBase
     }
 
     public Attributes getQuestion(int index)
+    {
+        if(index  >= 0 && index <  this.finalGame.size())
         {
-            if(index > 0 &&  index <  this.finalGame.size())
-            {
-                return this.finalGame.get(index);
-            }
+            return this.finalGame.get(index);
+        }
         return null;
     }
 
@@ -171,14 +171,4 @@ public class AttributeDataBase
     {
         return this.finalGame;
     }
-
-	/*public Attributes getIncorrect1(int index, int index2)
-	{
-		if(index > 0 && index < this.finalGame.size())
-		{
-			return this.finalGame.get(index, index2);
-		}
-		return null;
-	}*/
-
 }

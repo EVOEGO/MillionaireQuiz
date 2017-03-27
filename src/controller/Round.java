@@ -1,5 +1,6 @@
 package controller;
 
+import javax.sound.midi.Soundbank;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,31 +10,106 @@ import java.util.List;
  */
 public class Round
 {
-    public static ArrayList<String> create(Attributes attributes)
+    public String a;
+    public String b;
+    public String c;
+    public String d;
+    private  AttributeDataBase finalGame = new AttributeDataBase();
+
+    public void create(int i)
     {
         ArrayList<String> quizAnswers = new ArrayList<String>();
-        AttributeDataBase finalGame = new AttributeDataBase();
 
-        String correctAnswer = " "; // rst
+        String correctAnswer = " ";
+        a = "";
+        b = "";
+        c = "";
+        d = "";
 
-        quizAnswers.add(attributes.getAnswer());
-        quizAnswers.add(attributes.getIncorrect1());
-        quizAnswers.add(attributes.getIncorrect2());
-        quizAnswers.add(attributes.getIncorrect3());
+        quizAnswers.add(finalGame.getQuestions().get(i).getAnswer());
+        quizAnswers.add(finalGame.getQuestions().get(i).getIncorrect1());
+        quizAnswers.add(finalGame.getQuestions().get(i).getIncorrect2());
+        quizAnswers.add(finalGame.getQuestions().get(i).getIncorrect3());
         Collections.shuffle(quizAnswers);
+        System.out.println(finalGame.getQuestions().get(i).getQuestion());
+
+        for(int q = 0; q < quizAnswers.size(); q++)
+        {
+            if(q == 0)
+            {
+                System.out.println("A. " + quizAnswers.get(q));
+                a = quizAnswers.get(q);
+
+            }
+            else if(q == 1)
+            {
+                System.out.println("B. " + quizAnswers.get(q));
+                b = quizAnswers.get(q);
+            }
+            if(q == 2)
+            {
+                System.out.println("C. " + quizAnswers.get(q));
+                c = quizAnswers.get(q);
+            }
+            else if(q == 3)
+            {
+                System.out.println("D. " + quizAnswers.get(q));
+                d = quizAnswers.get(q);
+
+            }
+
+        }
+
+    }
+
+    public boolean quieryAnswer(String input)
+    {
+        int correctAnswer = 0;
+        boolean answer = true;
 
         for(int i = 0; i < finalGame.getQuestions().size(); i++)
         {
-            if(finalGame.getQuestion(i).getAnswer().toString().equalsIgnoreCase(quizAnswers.get(i)))
+            if(input.equalsIgnoreCase("a"))
             {
-                quizAnswers.add(attributes.getAnswer());
-                correctAnswer = Integer.toString(i);
-                quizAnswers.add(correctAnswer);
+                if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(a))
+                {
+                    answer = true;
+                    break;
+                }
+
+            }
+            else if(input.equalsIgnoreCase("b"))
+            {
+                if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(b))
+                {
+                    answer = true;
+                    break;
+                }
+            }
+            if(input.equalsIgnoreCase("c"))
+            {
+                if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(c))
+                {
+                    answer = true;
+                    break;
+                }
+            }
+            else if(input.equalsIgnoreCase("d"))
+            {
+                if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(d))
+                {
+                    answer = true;
+                    break;
+                }
+            }
+            else
+            {
+                answer = false;
                 break;
             }
+
         }
 
-        return quizAnswers;
+        return answer;
     }
-
 }
