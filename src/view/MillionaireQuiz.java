@@ -42,12 +42,29 @@ public class MillionaireQuiz
     public static void view() throws IOException, InterruptedException
     {
         Scanner scan = new Scanner(System.in);
+        boolean checker = false;
 
         System.out.println("                                                      | WHO WANTS TO BE A MILLIONAIRE |");
         System.out.println("=============================================================================================================================================");
         System.out.println("               ");
-        System.out.print("                                                  Username: ");
+        System.out.print("                                                                 Username: ");
         String username = scan.nextLine();
+
+        while(checker == false)
+        {
+            if(username.equalsIgnoreCase(""))
+            {
+                System.out.println("                                                          Invalid, try again. ");
+                System.out.print("                                                                 Username: ");
+                username = "";
+                username = scan.nextLine();
+            }
+            else
+            {
+                checker = true;
+            }
+        }
+
         System.out.println("               ");
         System.out.println("               ");
         System.out.println("=============================================================================================================================================");
@@ -59,33 +76,58 @@ public class MillionaireQuiz
 
     public static void game() throws IOException, InterruptedException
     {
+        Scanner scanInput = new Scanner(System.in);
+        Round round = new Round();
+
             for(int i = 0; i < 15; i++)
             {
-                Scanner scanInput = new Scanner(System.in);
-                Round round = new Round();
                 Integer roundNumber = i;
-                System.out.println("\n");
+                String answer = "";
 
+                System.out.println("\n");
                 System.out.println("This question is worth: $" + score(roundNumber));
 
-                String answer = "";
-                //System.out.println("");
-
                 round.create(i);
+
+                if(round.getUsedLifeline1() == true)
+                {
+                    System.out.println("\n");
+                    System.out.println("Available LifeLines: ");
+                }
+                else if(round.getUsedLifeline1() == false)
+                {
+                    System.out.println("\n");
+                    System.out.println("Available LifeLines: 50/50");
+                }
 
                 System.out.print("Answer: ");
                 answer = scanInput.nextLine();
 
-               if(round.quieryAnswer(answer) == true)
+                if(answer.equalsIgnoreCase("1") && round.getUsedLifeline1() == false)
                 {
-                    System.out.println("Correct!");
+                    System.out.println("Lifeline chosen - 50/50");
+                    round.fiftyFifty(roundNumber);
+                    System.out.print("Answer: ");
+                    answer = scanInput.nextLine();
+                }
+                else if(answer.equalsIgnoreCase("1") && round.getUsedLifeline1() == true)
+                {
+                    System.out.println("LifeLine has been used.");
+                    round.create(i);
+                    System.out.print("Answer: ");
+                    answer = scanInput.nextLine();
+                }
+
+                if(round.quieryAnswer(answer, roundNumber) == true)
+                {
+                    System.out.println("Correct! for $" + score(roundNumber));
 
                 }
-                else if(round.quieryAnswer(answer) == false)
+                else if(round.quieryAnswer(answer, roundNumber) == false)
                 {
                     System.out.println("incorrect");
+                    System.out.println("You lost " + score(roundNumber));
                     System.exit(0);
-
                 }
             }
 
