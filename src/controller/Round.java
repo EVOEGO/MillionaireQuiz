@@ -19,8 +19,11 @@ public class Round
     private String d;
     private boolean used50;
     private boolean usedAudience;
+    private boolean usedPhone;
     private ArrayList<Integer> chances = new ArrayList<>();
-    private  AttributeDataBase finalGame = new AttributeDataBase();
+    private AttributeDataBase finalGame = new AttributeDataBase();
+    private ArrayList<String> questionLetters = new ArrayList<>();
+    private ArrayList<String> friendNames = new ArrayList<>();
 
     public ArrayList<Integer> totalChances(int chance, int incorrect, int position)
     {
@@ -67,17 +70,25 @@ public class Round
 
         return chances;
     }
-
-    public Integer friendIsCorrect(int incorrect)
+    public Integer friendIsCorrect()
     {
-        int chance = incorrect;
+        int randomNumber = 0;
         Random rand = new Random();
 
+        randomNumber = rand.nextInt((100 - 1) + 1) + 1;
 
-        return chance;
+
+        return randomNumber;
     }
+    public Integer randomNumber()
+    {
+        int number = 0;
+        Random rand = new Random();
 
+        number = rand.nextInt((3 - 0) + 1) + 0;
 
+        return number;
+    }
     public void create(int i)
     {
         ArrayList<String> quizAnswers = new ArrayList<String>();
@@ -123,7 +134,6 @@ public class Round
         }
 
     }
-
     public boolean quieryAnswer(String input, Integer round)
     {
         int i = round;
@@ -161,7 +171,6 @@ public class Round
 
         return answer;
     }
-
     public boolean fiftyFifty(Integer round)
     {
         //fifty fitfy
@@ -172,8 +181,6 @@ public class Round
         {
             if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(a) || finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(b))
             {
-                System.out.println("\n");
-                System.out.println("\n");
                 System.out.println(finalGame.getQuestions().get(i).getQuestion());
                 System.out.println("A. " + a);
                 System.out.println("B. " + b);
@@ -182,8 +189,6 @@ public class Round
             }
             else if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(c) || finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(d))
             {
-                System.out.println("\n");
-                System.out.println("\n");
                 System.out.println(finalGame.getQuestions().get(i).getQuestion());
                 System.out.println("C. " + c);
                 System.out.println("D. " + d);
@@ -194,13 +199,11 @@ public class Round
 
         return used50 = true;
     }
-
     public void askTheAudience(Integer round)
     {
         //ask the audience
         int i = round;
         //boolean answer = false;
-        ArrayList<String> questionLetters = new ArrayList<>();
         questionLetters.add(a);
         questionLetters.add(b);
         questionLetters.add(c);
@@ -216,17 +219,14 @@ public class Round
                     int incorrect = 55;
                     int position = w;
                     totalChances(chance, incorrect, position);
-                    for (int x = 0; x < 4; x++) {
-                        if (x == 0) {
-                            System.out.println("A. " + chances.get(x) + "%");
-                        } else if (x == 1) {
-                            System.out.println("B. " + chances.get(x) + "%");
-                        } else if (x == 2) {
-                            System.out.println("C. " + chances.get(x) + "%");
-                        } else if (x == 3) {
-                            System.out.println("D. " + chances.get(x) + "%");
-                        }
-                    }
+
+                    System.out.println("A. " + chances.get(0) + "%");
+                    System.out.println("B. " + chances.get(1) + "%");
+                    System.out.println("C. " + chances.get(2) + "%");
+                    System.out.println("D. " + chances.get(3) + "%");
+
+                    break;
+
                 } else if (finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("2"))
                 {
                     usedAudience = true;
@@ -234,16 +234,12 @@ public class Round
                     int incorrect = 45;
                     int position = w;
                     totalChances(chance, incorrect, position);
-                    for (int x = 0; x < 4; x++) {
-                        if (x == 0) {
-                            System.out.println("A. " + chances.get(x) + "%");
-                        } else if (x == 1) {
-                            System.out.println("B. " + chances.get(x) + "%");
-                        } else if (x == 2) {
-                            System.out.println("C. " + chances.get(x) + "%");
-                        } else if (x == 3) {
-                            System.out.println("D. " + chances.get(x) + "%");
-                        }
+
+                    System.out.println("A. " + chances.get(0) + "%");
+                    System.out.println("B. " + chances.get(1) + "%");
+                    System.out.println("C. " + chances.get(2) + "%");
+                    System.out.println("D. " + chances.get(3) + "%");
+                    break;
                     }
                 }
                 else if (finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("3"))
@@ -253,30 +249,98 @@ public class Round
                     int incorrect = 35;
                     int position = w;
                     totalChances(chance, incorrect, position);
-                    for (int x = 0; x < 4; x++) {
-                        if (x == 0) {
-                            System.out.println("A. " + chances.get(x) + "%");
-                        } else if (x == 1) {
-                            System.out.println("B. " + chances.get(x) + "%");
-                        } else if (x == 2) {
-                            System.out.println("C. " + chances.get(x) + "%");
-                        } else if (x == 3) {
-                            System.out.println("D. " + chances.get(x) + "%");
-                        }
-                    }
+
+                    System.out.println("A. " + chances.get(0) + "%");
+                    System.out.println("B. " + chances.get(1) + "%");
+                    System.out.println("C. " + chances.get(2) + "%");
+                    System.out.println("D. " + chances.get(3) + "%");
+                    break;
                 }
 
             }
         }
-    }
-    public void lifeLine3()
+
+    public void phoneAFriend(String name, int round)
     {
         //phone a friend
+        int friendIsIncorrect = 40;
+        int i = round;
+        String username = name;
+        questionLetters.add(a);
+        questionLetters.add(b);
+        questionLetters.add(c);
+        questionLetters.add(d);
 
-        int friendIsIncorrect = 25;
+        System.out.println(finalGame.getQuestions().get(i).getQuestion());
+        printQuestions();
 
+        if(friendIsCorrect() > friendIsIncorrect)
+        {
+            for(int y = 1; y < questionLetters.size(); y++)
+            {
+                if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(questionLetters.get(y)))
+                {
+                    usedPhone = true;
+                    System.out.println("=============================================================================================================================================");
+                    System.out.println("Hello " + username + " its your mate " + friendNames.get(getFriendName()) +" here, i looked at the question");
+                    System.out.println("and i believe that |" + questionLetters.get(y) + "| is the correct one. ");
+                    System.out.println("Goodluck!!!!! catch you later.");
+                    System.out.println("=============================================================================================================================================");
+                    System.out.println("\n");
+                }
+            }
+        }
+        else
+        {
+            usedPhone = true;
+            System.out.println("=============================================================================================================================================");
+            System.out.println("Hello " + username + " its your friend " + friendNames.get(getFriendName()) +" here, i took a look at the question ");
+            System.out.println("your stuck on, and i think the answer is |" + questionLetters.get(randomNumber()) + "| Hope that helps! later man!");
+            System.out.println("=============================================================================================================================================");
+            System.out.println("\n");
 
+        }
+    }
+    public Integer getFriendName()
+    {
+        int number = 0;
+        Random rand = new Random();
 
+        friendNames.add("Joe");
+        friendNames.add("Mike");
+        friendNames.add("Jarad");
+        friendNames.add("Tj");
+        friendNames.add("Isabella");
+        friendNames.add("Tina");
+        friendNames.add("Grace");
+
+        number = rand.nextInt((6 - 1) + 1) + 1;
+
+        return number;
+    }
+
+    public void printQuestions()
+    {
+        for(int i = 0; i < questionLetters.size(); i++)
+        {
+            if(i == 0)
+            {
+                System.out.println("A. " + questionLetters.get(i));
+            }
+            else if(i == 1)
+            {
+                System.out.println("B. " + questionLetters.get(i));
+            }
+            else if(i == 2)
+            {
+                System.out.println("C. " + questionLetters.get(i));
+            }
+            else if(i == 3)
+            {
+                System.out.println("D. " + questionLetters.get(i));
+            }
+        }
+        //System.out.println("\n");
     }
 
     public boolean getUsed1()
@@ -286,6 +350,10 @@ public class Round
     public boolean getUsed2()
     {
         return usedAudience;
+    }
+    public boolean getUsed3()
+    {
+        return usedPhone;
     }
 }
 

@@ -1,5 +1,6 @@
 package view;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import controller.AttributeDataBase;
 import controller.Attributes;
 import controller.Round;
@@ -42,7 +43,7 @@ public class MillionaireQuiz
         return prizeMoney;
     }
 
-    public static void view() throws IOException, InterruptedException
+    public static String view()
     {
         Scanner scan = new Scanner(System.in);
         boolean checker = false;
@@ -75,12 +76,36 @@ public class MillionaireQuiz
         System.out.println("=============================================================================================================================================");
         System.out.println("\n");
 
+        return username;
     }
 
-    public static void game() throws IOException, InterruptedException
+    private static void rules()
+    {
+        System.out.println("                                                                      Rules ");
+        System.out.println("=============================================================================================================================================");
+        System.out.println("                              For General GamePlay You Will Need To Select One Of The Following Answers Given, In Order");
+        System.out.println("                                                       To Advance To The Next Question.");
+        System.out.println("=============================================================================================================================================");
+        System.out.println("                                           In Order To Access Lifelines You Will Need To Do The Following");
+        System.out.println("                                                         Input The Number: 1 - 50/50");
+        System.out.println("                                                         Input The Number: 2 - Ask The Audience");
+        System.out.println("                                                         Input The Number: 3 - Phone A Friend");
+        System.out.println("=============================================================================================================================================");
+
+        /*try {
+            Thread.sleep(5000);
+        }catch (InterruptedException e)
+        {
+            System.err.println("InterruptedException: " + e.getMessage());
+        }*/
+
+    }
+
+    public static void game(String name)
     {
         Scanner scanInput = new Scanner(System.in);
         Round round = new Round();
+
         /*I put these outside the for loop so that each time the for loop, looped over itself
         * it wont create a new round each time, as my variables would chance and return to default
         * and wouldn't store any data.*/
@@ -88,6 +113,8 @@ public class MillionaireQuiz
             for(int i = 0; i < 15; i++)
             {
                 Integer roundNumber = i;
+                String username = name;
+                boolean correctInput = false;
                 /*keeps track of the roundnumber so that i can use it for some of my variables*/
                 String answer = "";
 
@@ -108,70 +135,110 @@ public class MillionaireQuiz
                 System.out.println("This question is worth: $" + score(roundNumber));
 
                 round.create(i);
+                System.out.print("Answer: ");
+                answer = scanInput.nextLine();
 
-                if(round.getUsed1() == true && round.getUsed2() == true)
+                while(correctInput == false)
                 {
-                    System.out.println("\n");
-                    System.out.println("Available LifeLines: None");
-                }
-                else if(round.getUsed1() == false && round.getUsed2() == true)
-                {
-                    System.out.println("\n");
-                    System.out.println("Available LifeLines: 50/50");
-                }
-                else if(round.getUsed1() == true && round.getUsed2() == false)
-                {
-                    System.out.println("\n");
-                    System.out.println("Available LifeLines: Ask the Audience");
-                }
-                else if(round.getUsed1() == false && round.getUsed2() == false)
-                {
-                    System.out.println("\n");
-                    System.out.println("Available LifeLines: 50/50 | Ask the Audience");
-                }
+
+                    if(round.getUsed1() == true && round.getUsed2() == true && round.getUsed3() == true)
+                    {
+                       // System.out.println("\n");
+                        System.out.println("Available LifeLines: None");
+                    }
+                    else if(round.getUsed1() == false && round.getUsed2() == true && round.getUsed3() == true)
+                    {
+                        //System.out.println("\n");
+                        System.out.println("Available LifeLines: 50/50");
+                    }
+                    else if(round.getUsed1() == true && round.getUsed2() == false && round.getUsed3() == true)
+                    {
+                       // System.out.println("\n");
+                        System.out.println("Available LifeLines: Ask the Audience");
+                    }
+                    else if(round.getUsed1() == true && round.getUsed2() == true && round.getUsed3() == false)
+                    {
+                       // System.out.println("\n");
+                        System.out.println("Available LifeLines: Phone A Friend");
+                    }
+                    else if(round.getUsed1() == false && round.getUsed2() == false && round.getUsed3() == true)
+                    {
+                       // System.out.println("\n");
+                        System.out.println("Available LifeLines: 50/50 | Ask the Audience");
+                    }
+                    else if(round.getUsed1() == true && round.getUsed2() == false && round.getUsed3() == false)
+                    {
+                        //System.out.println("\n");
+                        System.out.println("Available LifeLines: Ask the Audience | Phone A Friend");
+                    }
+                    else if(round.getUsed1() == false && round.getUsed2() == true && round.getUsed3() == false)
+                    {
+                        //System.out.println("\n");
+                        System.out.println("Available LifeLines: 50/50 | Phone A Friend");
+                    }
+                    else if(round.getUsed1() == false && round.getUsed2() == false && round.getUsed3() == false)
+                    {
+                       // System.out.println("\n");
+                        System.out.println("Available LifeLInes: 50/50 | Ask the Audience | Phone A Friend");
+                    }
 
                 /*These blocks of if statemnets, i put there to check if a lifeline has been used or not,
                 * if it has been used them it wont be displayhed to the screen, else if it hasn't been
                 * used it will be displayed to the screen and still will be able to be used*/
 
-                System.out.print("Answer: ");
-                answer = scanInput.nextLine();
 
-                if(answer.equalsIgnoreCase("1") && round.getUsed1() == false)
-                {
-                    System.out.println("Lifeline chosen - 50/50");
-                    round.fiftyFifty(roundNumber);
+                    if(answer.equalsIgnoreCase("1") && round.getUsed1() == false)
+                    {
+                        System.out.println("Lifeline chosen - 50/50");
+                        System.out.println("\n");
+                        round.fiftyFifty(roundNumber);
+
+                    }
+                    else if(answer.equalsIgnoreCase("1") && round.getUsed1() == true) {
+                        System.out.println("LifeLine has been used.");
+                        round.create(i);
+                    }
+                    if(answer.equalsIgnoreCase("2") && round.getUsed2() == false)
+                    {
+                        System.out.println("LifeLine chosen - Ask the Audience");
+                        round.askTheAudience(roundNumber);
+
+                    }
+                    else if(answer.equalsIgnoreCase("2") && round.getUsed2() == true)
+                    {
+                        System.out.println("LifeLine has been used.");
+                        round.create(i);
+                        System.out.println("\n");
+
+                    }
+                    else if(answer.equalsIgnoreCase("3") && round.getUsed3() == false)
+                    {
+                        System.out.println("LifeLine chosen - Phone A Friend");
+                        System.out.println("\n");
+                        round.phoneAFriend(username, roundNumber);
+
+
+                    }
+                    else if(answer.equalsIgnoreCase("3") && round.getUsed3() == true)
+                    {
+                        System.out.println("LifeLine has been used.");
+                        round.create(i);
+
+                    }
+
+                    if(answer.equalsIgnoreCase("a") || answer.equalsIgnoreCase("b"))
+                    {
+                        correctInput = true;
+                    }
+                    else if(answer.equalsIgnoreCase("c") || answer.equalsIgnoreCase("d"))
+                    {
+                        correctInput = true;
+                    }
+
                     System.out.print("Answer: ");
                     answer = scanInput.nextLine();
+
                 }
-                else if(answer.equalsIgnoreCase("1") && round.getUsed1() == true)
-                {
-                    System.out.println("LifeLine has been used.");
-                    round.create(i);
-                    System.out.print("Answer: ");
-                    answer = scanInput.nextLine();
-                }
-                if(answer.equalsIgnoreCase("2") && round.getUsed2() == false)
-                {
-                    System.out.println("LifeLine chosen - Ask the Audience");
-                    round.askTheAudience(roundNumber);
-                    System.out.println("Answer: ");
-                    answer = scanInput.nextLine();
-                }
-                else if(answer.equalsIgnoreCase("2") && round.getUsed2() == true)
-                {
-                    System.out.println("LifeLine has been used.");
-                    round.create(i);
-                    System.out.println("Answer: ");
-                    answer = scanInput.nextLine();
-                }
-                /*else
-                {
-                    System.out.println("Invalid answer, Try Again...");
-                    round.create(i);
-                    System.out.print("Answer: ");
-                    answer = scanInput.nextLine();
-                }*/
                 /*If statements above i put there to check to see if the life line has been used before allowing
                 * the user to use it, if the life line has been used it will issue a print statement and disallow them
                 * the life line. Otherwise if the life line hasn't been used it will display the lifeline and continue
@@ -184,7 +251,12 @@ public class MillionaireQuiz
 
                     if(roundNumber == 14)
                     {
-                        Thread.sleep(1000);
+                        try {
+                            Thread.sleep(1000);
+                        }catch (InterruptedException e)
+                        {
+                            System.err.println("InterruptedException: " + e.getMessage());
+                        }
                         System.out.println("YOU HAVE WON A MILLION DOLLARS!!!!!!");
                         System.out.println("Congratulations!!!!");
                         System.out.println("$" + score(roundNumber));
@@ -208,8 +280,10 @@ public class MillionaireQuiz
     public static void main(String[] args) throws IOException, InterruptedException
     {
         boolean power = true;
-        view();
-        game();
+        //view();
+        String name = view();
+        rules();
+       game(name);
 
 
     }
