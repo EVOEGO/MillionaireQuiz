@@ -13,25 +13,70 @@ import java.util.Random;
  */
 public class Round
 {
-    public String a;
-    public String b;
-    public String c;
-    public String d;
-    boolean used50;
-    //private boolean used50;
+    private String a;
+    private String b;
+    private String c;
+    private String d;
+    private boolean used50;
+    private boolean usedAudience;
+    private ArrayList<Integer> chances = new ArrayList<>();
     private  AttributeDataBase finalGame = new AttributeDataBase();
 
-    public Integer randomNumber(int chance)
+    public ArrayList<Integer> totalChances(int chance, int incorrect, int position)
     {
-        int number = 0;
-
         Random random = new Random();
+        int incorrectChances = incorrect;
+        int ichance = incorrectChances / 2;
+        int number1 = 0;
+        int number2 = 0;
 
-        number  = random.nextInt((chance - 35) + 1) + 35;
+        number1 = random.nextInt((ichance - 10) + 1) + 10;
+        incorrectChances = incorrectChances - number1;
 
+        number2 = random.nextInt((ichance - 10) + 1) + 10;
+        incorrectChances = incorrectChances - number2;
 
-        return number;
+        if(position == 0)
+        {
+            chances.add(position, chance);
+            chances.add(1, number1);
+            chances.add(2, number2);
+            chances.add(3, incorrectChances);
+        }
+        else if(position == 1)
+        {
+            chances.add(0,number1);
+            chances.add(position, chance);
+            chances.add(2, number2);
+            chances.add(3, incorrectChances);
+        }
+        else if(position == 2)
+        {
+            chances.add(0, number1);
+            chances.add(1, number2);
+            chances.add(position, chance);
+            chances.add(3, incorrectChances);
+        }
+        else if(position == 3)
+        {
+            chances.add(0, number1);
+            chances.add(1, number2);
+            chances.add(2, incorrectChances);
+            chances.add(position, chance);
+        }
+
+        return chances;
     }
+
+    public Integer friendIsCorrect(int incorrect)
+    {
+        int chance = incorrect;
+        Random rand = new Random();
+
+
+        return chance;
+    }
+
 
     public void create(int i)
     {
@@ -150,43 +195,97 @@ public class Round
         return used50 = true;
     }
 
-    public void lifeLine2(Integer round)
+    public void askTheAudience(Integer round)
     {
         //ask the audience
         int i = round;
-        boolean answer = false;
+        //boolean answer = false;
+        ArrayList<String> questionLetters = new ArrayList<>();
+        questionLetters.add(a);
+        questionLetters.add(b);
+        questionLetters.add(c);
+        questionLetters.add(d);
 
-        if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(a))
-        {
-            if(finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("1"))
+        for(int w = 1; w < questionLetters.size(); w++) {
+            if (finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(questionLetters.get(w)))
             {
+                if (finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("1"))
+                {
+                    usedAudience = true;
+                    int chance = 45;
+                    int incorrect = 55;
+                    int position = w;
+                    totalChances(chance, incorrect, position);
+                    for (int x = 0; x < 4; x++) {
+                        if (x == 0) {
+                            System.out.println("A. " + chances.get(x) + "%");
+                        } else if (x == 1) {
+                            System.out.println("B. " + chances.get(x) + "%");
+                        } else if (x == 2) {
+                            System.out.println("C. " + chances.get(x) + "%");
+                        } else if (x == 3) {
+                            System.out.println("D. " + chances.get(x) + "%");
+                        }
+                    }
+                } else if (finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("2"))
+                {
+                    usedAudience = true;
+                    int chance = 55;
+                    int incorrect = 45;
+                    int position = w;
+                    totalChances(chance, incorrect, position);
+                    for (int x = 0; x < 4; x++) {
+                        if (x == 0) {
+                            System.out.println("A. " + chances.get(x) + "%");
+                        } else if (x == 1) {
+                            System.out.println("B. " + chances.get(x) + "%");
+                        } else if (x == 2) {
+                            System.out.println("C. " + chances.get(x) + "%");
+                        } else if (x == 3) {
+                            System.out.println("D. " + chances.get(x) + "%");
+                        }
+                    }
+                }
+                else if (finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("3"))
+                {
+                    usedAudience = true;
+                    int chance = 65;
+                    int incorrect = 35;
+                    int position = w;
+                    totalChances(chance, incorrect, position);
+                    for (int x = 0; x < 4; x++) {
+                        if (x == 0) {
+                            System.out.println("A. " + chances.get(x) + "%");
+                        } else if (x == 1) {
+                            System.out.println("B. " + chances.get(x) + "%");
+                        } else if (x == 2) {
+                            System.out.println("C. " + chances.get(x) + "%");
+                        } else if (x == 3) {
+                            System.out.println("D. " + chances.get(x) + "%");
+                        }
+                    }
+                }
 
             }
-
         }
-        else if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(b))
-        {
-            answer = true;
-        }
-        if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(c))
-        {
-            answer = true;
-        }
-        else if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(d))
-        {
-            answer = true;
-        }
-
-
     }
     public void lifeLine3()
     {
-        //switch question
+        //phone a friend
+
+        int friendIsIncorrect = 25;
+
+
+
     }
 
-    public boolean getUsedLifeline1()
+    public boolean getUsed1()
     {
         return used50;
+    }
+    public boolean getUsed2()
+    {
+        return usedAudience;
     }
 }
 
