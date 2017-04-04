@@ -104,7 +104,9 @@ public class Round
         quizAnswers.add(finalGame.getQuestions().get(i).getIncorrect2());
         quizAnswers.add(finalGame.getQuestions().get(i).getIncorrect3());
         Collections.shuffle(quizAnswers);
+        System.out.print("Quesiton " + (i + 1) + ": ");
         System.out.println(finalGame.getQuestions().get(i).getQuestion());
+        System.out.println("-------------------------------------------------------------");
 
         for(int q = 0; q < quizAnswers.size(); q++)
         {
@@ -132,7 +134,7 @@ public class Round
             }
 
         }
-
+        System.out.println("-------------------------------------------------------------");
     }
     public boolean quieryAnswer(String input, Integer round)
     {
@@ -145,7 +147,6 @@ public class Round
             {
                 answer = true;
             }
-
         }
         else if(input.equalsIgnoreCase("b"))
         {
@@ -199,8 +200,7 @@ public class Round
 
         return used50 = true;
     }
-    public void askTheAudience(Integer round)
-    {
+    public void askTheAudience(Integer round) {
         //ask the audience
         int i = round;
         //boolean answer = false;
@@ -209,56 +209,38 @@ public class Round
         questionLetters.add(c);
         questionLetters.add(d);
 
-        for(int w = 1; w < questionLetters.size(); w++) {
-            if (finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(questionLetters.get(w)))
-            {
-                if (finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("1"))
-                {
+        for (int w = 1; w < questionLetters.size(); w++) {
+            if (finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(questionLetters.get(w))) {
+                if (finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("1")) {
                     usedAudience = true;
                     int chance = 45;
                     int incorrect = 55;
                     int position = w;
                     totalChances(chance, incorrect, position);
-
-                    System.out.println("A. " + chances.get(0) + "%");
-                    System.out.println("B. " + chances.get(1) + "%");
-                    System.out.println("C. " + chances.get(2) + "%");
-                    System.out.println("D. " + chances.get(3) + "%");
-
+                    print();
                     break;
 
-                } else if (finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("2"))
-                {
+                } else if (finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("2")) {
                     usedAudience = true;
                     int chance = 55;
                     int incorrect = 45;
                     int position = w;
                     totalChances(chance, incorrect, position);
-
-                    System.out.println("A. " + chances.get(0) + "%");
-                    System.out.println("B. " + chances.get(1) + "%");
-                    System.out.println("C. " + chances.get(2) + "%");
-                    System.out.println("D. " + chances.get(3) + "%");
+                    print();
                     break;
-                    }
-                }
-                else if (finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("3"))
-                {
+                } else if (finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("3")) {
                     usedAudience = true;
                     int chance = 65;
                     int incorrect = 35;
                     int position = w;
                     totalChances(chance, incorrect, position);
-
-                    System.out.println("A. " + chances.get(0) + "%");
-                    System.out.println("B. " + chances.get(1) + "%");
-                    System.out.println("C. " + chances.get(2) + "%");
-                    System.out.println("D. " + chances.get(3) + "%");
+                    print();
                     break;
                 }
 
             }
         }
+    }
 
     public void phoneAFriend(String name, int round)
     {
@@ -301,6 +283,7 @@ public class Round
 
         }
     }
+
     public Integer getFriendName()
     {
         int number = 0;
@@ -342,6 +325,20 @@ public class Round
         }
         //System.out.println("\n");
     }
+
+    /*Moved my print statements to a method instead to save space in my code*/
+
+    public void print()
+    {
+        System.out.println("A. " + chances.get(0) + "%");
+        System.out.println("B. " + chances.get(1) + "%");
+        System.out.println("C. " + chances.get(2) + "%");
+        System.out.println("D. " + chances.get(3) + "%");
+    }
+
+    /*I created the getUsed methods, so that i could check to see if the lifelines had been used
+    I found these really helpful, in my main view as i was able to check on the fly if each lifeline
+    had been used or not.*/
 
     public boolean getUsed1()
     {

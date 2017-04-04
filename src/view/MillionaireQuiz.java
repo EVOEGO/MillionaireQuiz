@@ -91,6 +91,9 @@ public class MillionaireQuiz
         System.out.println("                                                         Input The Number: 2 - Ask The Audience");
         System.out.println("                                                         Input The Number: 3 - Phone A Friend");
         System.out.println("=============================================================================================================================================");
+        System.out.println("                                                 If You Want To Take The Money At Any Stage Of The Game");
+        System.out.println("                                                                 Input - Run");
+        System.out.println("=============================================================================================================================================");
 
         /*try {
             Thread.sleep(5000);
@@ -105,6 +108,10 @@ public class MillionaireQuiz
     {
         Scanner scanInput = new Scanner(System.in);
         Round round = new Round();
+        Integer roundNumber;
+        String username;
+        Boolean correctInput;
+        String answer;
 
         /*I put these outside the for loop so that each time the for loop, looped over itself
         * it wont create a new round each time, as my variables would chance and return to default
@@ -112,11 +119,11 @@ public class MillionaireQuiz
 
             for(int i = 0; i < 15; i++)
             {
-                Integer roundNumber = i;
-                String username = name;
-                boolean correctInput = false;
+                roundNumber = i;
+                username = name;
+                correctInput = false;
                 /*keeps track of the roundnumber so that i can use it for some of my variables*/
-                String answer = "";
+                answer = "";
 
                 if(roundNumber == 4)
                 {
@@ -135,13 +142,13 @@ public class MillionaireQuiz
                 System.out.println("This question is worth: $" + score(roundNumber));
 
                 round.create(i);
-                System.out.print("Answer: ");
-                answer = scanInput.nextLine();
+               // System.out.print("Answer: ");
+                //answer = scanInput.nextLine();
 
                 while(correctInput == false)
                 {
 
-                    if(round.getUsed1() == true && round.getUsed2() == true && round.getUsed3() == true)
+                   /* if(round.getUsed1() == true && round.getUsed2() == true && round.getUsed3() == true)
                     {
                        // System.out.println("\n");
                         System.out.println("Available LifeLines: None");
@@ -180,7 +187,35 @@ public class MillionaireQuiz
                     {
                        // System.out.println("\n");
                         System.out.println("Available LifeLInes: 50/50 | Ask the Audience | Phone A Friend");
-                    }
+                    }*/
+
+                    System.out.print("Available Lifelines: ");
+
+                   if(round.getUsed1() == false)
+                   {
+                       System.out.print("50/50");
+                       System.out.print(" | ");
+                   }
+                   if(round.getUsed2() == false)
+                   {
+                       System.out.print("Ask the Audience");
+                       System.out.print(" | ");
+                   }
+                   if(round.getUsed3() == false)
+                   {
+                       System.out.print("Phone A Friend");
+                       System.out.print(" | ");;
+                   }
+                   else
+                   {
+                       System.out.println("None");
+                   }
+
+                    System.out.print("\n");
+
+                    System.out.print("Answer: ");
+                    answer = scanInput.nextLine();
+
 
                 /*These blocks of if statemnets, i put there to check if a lifeline has been used or not,
                 * if it has been used them it wont be displayhed to the screen, else if it hasn't been
@@ -225,18 +260,31 @@ public class MillionaireQuiz
                         round.create(i);
 
                     }
+                    else if(answer.equalsIgnoreCase("help"))
+                    {
+                        rules();
+                        round.create(i);
+                    }
+                    else if(answer.equalsIgnoreCase("run"))
+                    {
+                        System.out.println("Congratulations you took the money and ended up with " + score(roundNumber));
+                        System.out.println("Goodluck and thank for you for playing ");
+                        System.out.println("WHO WANTS TO BE A MILLIONAIRE!!!!");
+                        System.exit(0);
+                    }
 
                     if(answer.equalsIgnoreCase("a") || answer.equalsIgnoreCase("b"))
                     {
                         correctInput = true;
+
                     }
                     else if(answer.equalsIgnoreCase("c") || answer.equalsIgnoreCase("d"))
                     {
                         correctInput = true;
+
                     }
 
-                    System.out.print("Answer: ");
-                    answer = scanInput.nextLine();
+
 
                 }
                 /*If statements above i put there to check to see if the life line has been used before allowing
@@ -268,6 +316,7 @@ public class MillionaireQuiz
                 {
                     System.out.println("incorrect");
                     System.out.println("You lost " + score(roundNumber));
+                    System.out.println("Thank you for playing Who Wants To Be A Millionaire Quiz");
                     System.exit(0);
                 }
 

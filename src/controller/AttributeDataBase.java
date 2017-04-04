@@ -18,6 +18,8 @@ public class AttributeDataBase
     private int difficulty2;
     private int difficulty3;
     private int randDiff;
+    private String line;
+    private String[] splitLine;
 
     ArrayList<Attributes> attributes = new ArrayList<Attributes>();
     ArrayList<Attributes> finalGame = new ArrayList<Attributes>();
@@ -47,8 +49,8 @@ public class AttributeDataBase
 
             while (fileScan.hasNextLine()) //while loop to loop over the file as long as it has a next line
             {
-                String line = fileScan.nextLine();
-                String[] splitLine = line.split("%");
+                line = fileScan.nextLine();
+                splitLine = line.split("%");
 
                 Attributes attribute = new Attributes();
                 Attributes finalAttributes = new Attributes();
