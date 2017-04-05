@@ -4,6 +4,7 @@ import com.sun.org.apache.xpath.internal.SourceTree;
 import controller.AttributeDataBase;
 import controller.Attributes;
 import controller.Round;
+import controller.highScores;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -43,13 +44,94 @@ public class MillionaireQuiz
         return prizeMoney;
     }
 
+    public static void printMENU()
+    {
+        System.out.println("                                                      | WHO WANTS TO BE A MILLIONAIRE |");
+        System.out.println("=============================================================================================================================================");
+        System.out.println("                                                            (1) Start New Game");
+        System.out.println("                                                            (2) HighScores ");
+        System.out.println("                                                            (3) Exit");
+        System.out.println("");
+        System.out.print("                                                                 Input: ");
+    }
+
+
+    public static void MENU()
+    {
+        Scanner scan = new Scanner(System.in);
+        String userChoice = "";
+        boolean correctInput = false;
+        highScores score = new highScores();
+
+        printMENU();
+        userChoice = scan.nextLine();
+
+       while(correctInput == false)
+       {
+           if(userChoice.equalsIgnoreCase("1"))
+           {
+                correctInput = true;
+           }
+           else if(userChoice.equalsIgnoreCase("2"))
+           {
+               score.initaliseHighScores();
+               System.out.println("");
+               System.out.println("                                                                | HIGHSCORES |");
+               System.out.println("=============================================================================================================================================");
+
+               for(int x = 0; x < score.getHighScores().size(); x++)
+               {
+                   if(x==0)
+                   {
+                       System.out.print("                                                                 ");
+                       System.out.print(score.getHighScores().get(x) + " ");
+                   }
+                   if(x == 1)
+                   {
+                       System.out.print(score.getHighScores().get(x));
+                       System.out.println("");
+                   }
+               }
+
+               System.out.println("=============================================================================================================================================");
+               System.out.println("");
+               printMENU();
+               System.out.print("                                                                 Input: ");
+               userChoice = scan.nextLine();
+
+           }
+           else if(userChoice.equalsIgnoreCase("3"))
+           {
+               System.out.println("What was the point in opening the program.................");
+
+               try
+               {
+                   Thread.sleep(1000);
+               }
+               catch (InterruptedException e)
+               {
+                   e.printStackTrace();
+               }
+
+               System.exit(0);
+           }
+           else
+           {
+               System.out.println("Incorrect input, try again");
+               userChoice = "";
+               System.out.print("Input: ");
+               userChoice = scan.nextLine();
+           }
+       }
+
+    }
+
     public static String view()
     {
         Scanner scan = new Scanner(System.in);
         boolean checker = false;
+        highScores score = new highScores();
 
-        System.out.println("                                                      | WHO WANTS TO BE A MILLIONAIRE |");
-        System.out.println("=============================================================================================================================================");
         System.out.println("               ");
         System.out.print("                                                                 Username: ");
         String username = scan.nextLine();
@@ -112,6 +194,7 @@ public class MillionaireQuiz
         String username;
         Boolean correctInput;
         String answer;
+        Integer prize;
 
         /*I put these outside the for loop so that each time the for loop, looped over itself
         * it wont create a new round each time, as my variables would chance and return to default
@@ -270,6 +353,9 @@ public class MillionaireQuiz
                         System.out.println("Congratulations you took the money and ended up with " + score(roundNumber));
                         System.out.println("Goodluck and thank for you for playing ");
                         System.out.println("WHO WANTS TO BE A MILLIONAIRE!!!!");
+                        highScores score = new highScores();
+                        prize = score(roundNumber);
+                        score.saveHighScore(prize, username);
                         System.exit(0);
                     }
 
@@ -330,6 +416,7 @@ public class MillionaireQuiz
     {
         boolean power = true;
         //view();
+        MENU();
         String name = view();
         rules();
        game(name);
