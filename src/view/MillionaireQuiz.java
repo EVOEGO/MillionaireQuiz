@@ -335,7 +335,7 @@ public class MillionaireQuiz
                                         state = false;
                                         choice = true;
                                     }
-                                    else 
+                                    else
                                     {
                                         state = true;
                                         round.checkFiftyFifty(state);
