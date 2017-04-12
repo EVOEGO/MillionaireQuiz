@@ -47,7 +47,7 @@ public class Round
 
         if(position == 0)
         {
-            chances.add(chance);
+            chances.add(0, chance);
             chances.add(1, number1);
             chances.add(2, number2);
             chances.add(3, incorrectChances);
@@ -249,7 +249,7 @@ public class Round
         //ask the audience
         int i = round;
 
-        for (int w = 1; w < questionLetters.size(); w++) {
+        for (int w = 0; w < 4; w++) {
             if (finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(questionLetters.get(w))) {
                 if (finalGame.getQuestion(i).getDifficulty().equalsIgnoreCase("1")) {
                     usedAudience = true;
@@ -288,9 +288,7 @@ public class Round
         int friendIsIncorrect = 40;
         int i = round;
         String username = name;
-
-        System.out.println(finalGame.getQuestions().get(i).getQuestion());
-        printQuestions();
+        create(i);
 
         if(friendIsCorrect() > friendIsIncorrect)
         {
