@@ -44,6 +44,7 @@ public class highScores
             //concatenates the input so its read in together and then split up later on
 
             writer.write(input);
+            writer.write("\n");
             writer.close();
         }
         catch (IOException e)
@@ -85,9 +86,6 @@ public class highScores
 
                             SORTED_SCORES.add(HIGH_SCORES.get(x-1));
                             SORTED_SCORES.add(Integer.toString(SCORE_NUMBER.get(i))); //I then add them to a differnt arraylist, that i call in the LOGIN_VIEW
-                           // HIGH_SCORES.remove(HIGH_SCORES.get(x));
-                            //HIGH_SCORES.remove(HIGH_SCORES.get(x--));
-                            //SCORE_NUMBER.remove(SCORE_NUMBER.get(i));
                             break;
                         }
                     }

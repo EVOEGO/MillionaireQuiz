@@ -93,7 +93,6 @@ public class MillionaireQuiz
                System.out.println("=============================================================================================================================================");
                System.out.println("");
                printMENU();
-               System.out.print("                                                     Input: ");
                userChoice = scan.nextLine();
 
            }
@@ -339,10 +338,36 @@ public class MillionaireQuiz
                                     {
                                         state = true;
                                         round.checkFiftyFifty(state);
-                                        round.fiftyFifty(roundNumber);
+                                        round.printFiftyFifty(1, roundNumber);
+                                        System.out.print("Answer: ");
+                                        answer = scanInput.nextLine();
                                     }
                                 }
                             }
+                            else if(round.confirmFiftyFifty() == 2)
+                            {
+                                while(choice == false)
+                                {
+                                    if(answer.equalsIgnoreCase("c") || answer.equalsIgnoreCase("d"))
+                                    {
+                                        correctInput = true;
+                                        state = false;
+                                        choice = true;
+                                    }
+                                    else
+                                    {
+                                        state = true;
+                                        round.checkFiftyFifty(state);
+                                        round.printFiftyFifty(2, roundNumber);
+                                        System.out.print("Answer: ");
+                                        answer = scanInput.nextLine();
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            correctInput = true;
                         }
                     }
                     else if(answer.equalsIgnoreCase("c") || answer.equalsIgnoreCase("d"))
@@ -363,7 +388,29 @@ public class MillionaireQuiz
                                     {
                                         state = true;
                                         round.checkFiftyFifty(state);
-                                        round.fiftyFifty(roundNumber);
+                                        round.printFiftyFifty(2, roundNumber);
+                                        System.out.print("Answer: ");
+                                        answer = scanInput.nextLine();
+                                    }
+                                }
+                            }
+                            else if(round.confirmFiftyFifty() == 1)
+                            {
+                                while (choice == false)
+                                {
+                                    if (answer.equalsIgnoreCase("a") || answer.equalsIgnoreCase("b"))
+                                    {
+                                        correctInput = true;
+                                        state = false;
+                                        choice = true;
+                                    }
+                                    else
+                                    {
+                                        state = true;
+                                        round.checkFiftyFifty(state);
+                                        round.printFiftyFifty(1, roundNumber);
+                                        System.out.print("Answer: ");
+                                        answer = scanInput.nextLine();
                                     }
                                 }
                             }

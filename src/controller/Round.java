@@ -47,7 +47,7 @@ public class Round
 
         if(position == 0)
         {
-            chances.add(position, chance);
+            chances.add(chance);
             chances.add(1, number1);
             chances.add(2, number2);
             chances.add(3, incorrectChances);
@@ -74,6 +74,7 @@ public class Round
             chances.add(position, chance);
         }
 
+        chances.trimToSize();
         return chances;
     }
     public Integer friendIsCorrect()
@@ -191,26 +192,37 @@ public class Round
         {
             if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(a) || finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(b))
             {
-                System.out.println(finalGame.getQuestions().get(i).getQuestion());
-                System.out.println("A. " + a);
-                System.out.println("B. " + b);
                 FIFTYFIFTY = 1;
-
+                printFiftyFifty(FIFTYFIFTY, i);
                 used50 = true;
                 break;
             }
             else if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(c) || finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(d))
             {
-                System.out.println(finalGame.getQuestions().get(i).getQuestion());
-                FIFTYFIFTY =2;
-                System.out.println("C. " + c);
-                System.out.println("D. " + d);
+                FIFTYFIFTY = 2;
+                printFiftyFifty(FIFTYFIFTY, i);
                 used50 = true;
                 break;
             }
         }
 
         return used50 = true;
+    }
+
+    public void printFiftyFifty(int number, int i)
+    {
+        if(number == 1)
+        {
+            System.out.println(finalGame.getQuestions().get(i).getQuestion());
+            System.out.println("A. " + a);
+            System.out.println("B. " + b);
+        }
+        else if(number == 2)
+        {
+            System.out.println(finalGame.getQuestions().get(i).getQuestion());
+            System.out.println("C. " + c);
+            System.out.println("D. " + d);
+        }
     }
 
     public void checkQuestionType(String question, int i)
