@@ -77,22 +77,17 @@ public class MillionaireQuiz
            else if(userChoice.equalsIgnoreCase("2"))
            {
                score.initaliseHighScores();
+               //Initalises the highscores, by reading them in
                System.out.println("");
                System.out.println("                                                                | HIGHSCORES |");
                System.out.println("=============================================================================================================================================");
 
-               for(int x = 0; x < score.getHighScores().size(); x++)
+               for(int x = 0; x < score.get_SORTED_SCORES().size(); x++)
                {
-                   if(x==0)
-                   {
-                       System.out.print("                                                                 ");
-                       System.out.print(score.getHighScores().get(x) + " ");
-                   }
-                   if(x == 1)
-                   {
-                       System.out.print(score.getHighScores().get(x));
-                       System.out.println("");
-                   }
+                   System.out.print("                                                     " + score.get_SORTED_SCORES().get(x) + " : " + "");
+                   x++;
+                   System.out.println(score.get_SORTED_SCORES().get(x));
+                   //prints out the highscores
                }
 
                System.out.println("=============================================================================================================================================");
@@ -124,6 +119,7 @@ public class MillionaireQuiz
                userChoice = "";
                System.out.print("                                                                 Input: ");
                userChoice = scan.nextLine();
+               //error message, to make sure the user enters in the correct input
            }
        }
 
@@ -359,12 +355,12 @@ public class MillionaireQuiz
                 }
                 else if(round.quieryAnswer(answer, roundNumber) == false)
                 {
-                    System.out.println("incorrect");
-                    System.out.println("You lost " + score(roundNumber));
-                    System.out.println("Thank you for playing Who Wants To Be A Millionaire Quiz");
                     highScores score = new highScores();
                     prize = score(roundNumber);
                     score.saveHighScore(prize, username);
+                    System.out.println("incorrect");
+                    System.out.println("You lost " + score(roundNumber));
+                    System.out.println("Thank you for playing Who Wants To Be A Millionaire Quiz");
                     System.exit(0);
                 }
 
