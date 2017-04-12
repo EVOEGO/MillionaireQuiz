@@ -24,6 +24,10 @@ public class Round
     private AttributeDataBase finalGame = new AttributeDataBase();
     private ArrayList<String> questionLetters = new ArrayList<>();
     private ArrayList<String> friendNames = new ArrayList<>();
+    private boolean isAnswer = false;
+    private boolean isIncorrect1;
+    private boolean isIncorrect2;
+    private boolean isIncorrect3;
 
     public ArrayList<Integer> totalChances(int chance, int incorrect, int position)
     {
@@ -85,7 +89,7 @@ public class Round
         int number = 0;
         Random rand = new Random();
 
-        number = rand.nextInt((3 - 0) + 1) + 0;
+        number = rand.nextInt((4 - 1) + 1) + 1;
 
         return number;
     }
@@ -185,14 +189,18 @@ public class Round
                 System.out.println(finalGame.getQuestions().get(i).getQuestion());
                 System.out.println("A. " + a);
                 System.out.println("B. " + b);
+
+                checkQuestionType(c, i);
+                checkQuestionType(d, i);
+
                 used50 = true;
                 break;
             }
             else if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(c) || finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(d))
             {
                 System.out.println(finalGame.getQuestions().get(i).getQuestion());
-                System.out.println("C. " + c);
-                System.out.println("D. " + d);
+                System.out.println("A. " + c);
+                System.out.println("B. " + d);
                 used50 = true;
                 break;
             }
@@ -200,6 +208,27 @@ public class Round
 
         return used50 = true;
     }
+
+    public void checkQuestionType(String question, int i)
+    {
+        if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(question))
+        {
+            isAnswer = true;
+        }
+        else if(finalGame.getQuestion(i).getIncorrect1().equalsIgnoreCase(question))
+        {
+            isIncorrect1 = true;
+        }
+        if(finalGame.getQuestion(i).getIncorrect2().equalsIgnoreCase(question))
+        {
+            isIncorrect2 = true;
+        }
+        else if(finalGame.getQuestion(i).getIncorrect3().equalsIgnoreCase(question))
+        {
+            isIncorrect3 =true;
+        }
+    }
+
     public void askTheAudience(Integer round) {
         //ask the audience
         int i = round;
@@ -252,6 +281,7 @@ public class Round
         questionLetters.add(b);
         questionLetters.add(c);
         questionLetters.add(d);
+        questionLetters.trimToSize();
 
         System.out.println(finalGame.getQuestions().get(i).getQuestion());
         printQuestions();
@@ -296,6 +326,7 @@ public class Round
         friendNames.add("Isabella");
         friendNames.add("Tina");
         friendNames.add("Grace");
+        friendNames.trimToSize();
 
         number = rand.nextInt((6 - 1) + 1) + 1;
 

@@ -64,6 +64,8 @@ public class MillionaireQuiz
         highScores score = new highScores();
 
         printMENU();
+        //I added this method so that i didn't have to have big blocks of system.out. It made my code alot easier to work with
+
         userChoice = scan.nextLine();
 
        while(correctInput == false)
@@ -96,13 +98,13 @@ public class MillionaireQuiz
                System.out.println("=============================================================================================================================================");
                System.out.println("");
                printMENU();
-               System.out.print("                                                                 Input: ");
+               System.out.print("                                                     Input: ");
                userChoice = scan.nextLine();
 
            }
            else if(userChoice.equalsIgnoreCase("3"))
            {
-               System.out.println("What was the point in opening the program.................");
+               System.out.println("                                                     What was the point in opening the program.................");
 
                try
                {
@@ -112,14 +114,15 @@ public class MillionaireQuiz
                {
                    e.printStackTrace();
                }
+                /*Try catch loops so that i handle the error instead of ignoring them*/
 
                System.exit(0);
            }
            else
            {
-               System.out.println("Incorrect input, try again");
+               System.out.println("                                                       Incorrect input, try again");
                userChoice = "";
-               System.out.print("Input: ");
+               System.out.print("                                                                 Input: ");
                userChoice = scan.nextLine();
            }
        }
@@ -230,48 +233,6 @@ public class MillionaireQuiz
 
                 while(correctInput == false)
                 {
-
-                   /* if(round.getUsed1() == true && round.getUsed2() == true && round.getUsed3() == true)
-                    {
-                       // System.out.println("\n");
-                        System.out.println("Available LifeLines: None");
-                    }
-                    else if(round.getUsed1() == false && round.getUsed2() == true && round.getUsed3() == true)
-                    {
-                        //System.out.println("\n");
-                        System.out.println("Available LifeLines: 50/50");
-                    }
-                    else if(round.getUsed1() == true && round.getUsed2() == false && round.getUsed3() == true)
-                    {
-                       // System.out.println("\n");
-                        System.out.println("Available LifeLines: Ask the Audience");
-                    }
-                    else if(round.getUsed1() == true && round.getUsed2() == true && round.getUsed3() == false)
-                    {
-                       // System.out.println("\n");
-                        System.out.println("Available LifeLines: Phone A Friend");
-                    }
-                    else if(round.getUsed1() == false && round.getUsed2() == false && round.getUsed3() == true)
-                    {
-                       // System.out.println("\n");
-                        System.out.println("Available LifeLines: 50/50 | Ask the Audience");
-                    }
-                    else if(round.getUsed1() == true && round.getUsed2() == false && round.getUsed3() == false)
-                    {
-                        //System.out.println("\n");
-                        System.out.println("Available LifeLines: Ask the Audience | Phone A Friend");
-                    }
-                    else if(round.getUsed1() == false && round.getUsed2() == true && round.getUsed3() == false)
-                    {
-                        //System.out.println("\n");
-                        System.out.println("Available LifeLines: 50/50 | Phone A Friend");
-                    }
-                    else if(round.getUsed1() == false && round.getUsed2() == false && round.getUsed3() == false)
-                    {
-                       // System.out.println("\n");
-                        System.out.println("Available LifeLInes: 50/50 | Ask the Audience | Phone A Friend");
-                    }*/
-
                     System.out.print("Available Lifelines: ");
 
                    if(round.getUsed1() == false)
@@ -370,8 +331,6 @@ public class MillionaireQuiz
 
                     }
 
-
-
                 }
                 /*If statements above i put there to check to see if the life line has been used before allowing
                 * the user to use it, if the life line has been used it will issue a print statement and disallow them
@@ -403,6 +362,9 @@ public class MillionaireQuiz
                     System.out.println("incorrect");
                     System.out.println("You lost " + score(roundNumber));
                     System.out.println("Thank you for playing Who Wants To Be A Millionaire Quiz");
+                    highScores score = new highScores();
+                    prize = score(roundNumber);
+                    score.saveHighScore(prize, username);
                     System.exit(0);
                 }
 
@@ -419,7 +381,7 @@ public class MillionaireQuiz
         MENU();
         String name = view();
         rules();
-       game(name);
+        game(name);
 
 
     }

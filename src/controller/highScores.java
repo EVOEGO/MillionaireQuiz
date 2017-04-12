@@ -23,6 +23,9 @@ public class highScores
         this.HIGH_SCORES = new ArrayList<>();
     }
 
+    /*saveHighScore method will write to the highscores file. So that i can keep a running count
+    * of the current highscores.*/
+
     public void saveHighScore(int score, String Username)
     {
         try
