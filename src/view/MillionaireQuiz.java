@@ -1,20 +1,17 @@
 package view;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
 import controller.AttributeDataBase;
-import controller.Attributes;
 import controller.Round;
 import controller.highScores;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
 public class MillionaireQuiz
 {
-    private AttributeDataBase quizQuestions;
+    private static AttributeDataBase quizQuestions;
 
     public static Integer score(Integer round)
     {
@@ -55,12 +52,14 @@ public class MillionaireQuiz
         System.out.print("                                                                 Input: ");
     }
 
-
+//This method prints the main menu that is presented to the user first.
     public static void MENU()
     {
         Scanner scan = new Scanner(System.in);
         String userChoice = "";
         boolean correctInput = false;
+        /*i made this varaible to make sure that the input that was being entered was correct and could be used in a while loop
+        * to check to verify that this is true. Figured that booleans would be the best varaible type to use.*/
         highScores score = new highScores();
 
         printMENU();
@@ -73,6 +72,7 @@ public class MillionaireQuiz
            if(userChoice.equalsIgnoreCase("1"))
            {
                 correctInput = true;
+                //starts the game
            }
            else if(userChoice.equalsIgnoreCase("2"))
            {
@@ -84,7 +84,7 @@ public class MillionaireQuiz
 
                for(int x = 0; x < score.get_SORTED_SCORES().size(); x++)
                {
-                   System.out.print("                                                     " + score.get_SORTED_SCORES().get(x) + " : " + "");
+                   System.out.print("                                                               " + score.get_SORTED_SCORES().get(x) + " : " + "");
                    x++;
                    System.out.println(score.get_SORTED_SCORES().get(x));
                    //prints out the highscores
@@ -125,7 +125,8 @@ public class MillionaireQuiz
 
     }
 
-    public static String view()
+    //this method prints out the login LOGIN_VIEW
+    public static String LOGIN_VIEW()
     {
         Scanner scan = new Scanner(System.in);
         boolean checker = false;
@@ -160,6 +161,7 @@ public class MillionaireQuiz
         return username;
     }
 
+    //this is the rules method, it prints out the rules to the user
     private static void rules()
     {
         System.out.println("                                                                      Rules ");
@@ -176,12 +178,14 @@ public class MillionaireQuiz
         System.out.println("                                                                 Input - Run");
         System.out.println("=============================================================================================================================================");
 
-        /*try {
-            Thread.sleep(5000);
+        /*I put this in so that the user has to read the rules at the start so they are informed about them.
+        * This will also enhance their gameplay as they will know what to do.*/
+        try {
+            Thread.sleep(3000);
         }catch (InterruptedException e)
         {
             System.err.println("InterruptedException: " + e.getMessage());
-        }*/
+        }
 
     }
 
@@ -194,7 +198,8 @@ public class MillionaireQuiz
         Boolean correctInput;
         String answer;
         Integer prize;
-
+        Boolean state = false;
+        boolean choice = false;
         /*I put these outside the for loop so that each time the for loop, looped over itself
         * it wont create a new round each time, as my variables would chance and return to default
         * and wouldn't store any data.*/
@@ -224,8 +229,6 @@ public class MillionaireQuiz
                 System.out.println("This question is worth: $" + score(roundNumber));
 
                 round.create(i);
-               // System.out.print("Answer: ");
-                //answer = scanInput.nextLine();
 
                 while(correctInput == false)
                 {
@@ -266,6 +269,8 @@ public class MillionaireQuiz
                     {
                         System.out.println("Lifeline chosen - 50/50");
                         System.out.println("\n");
+                        state = true;
+                        round.checkFiftyFifty(state);
                         round.fiftyFifty(roundNumber);
 
                     }
@@ -318,12 +323,55 @@ public class MillionaireQuiz
 
                     if(answer.equalsIgnoreCase("a") || answer.equalsIgnoreCase("b"))
                     {
-                        correctInput = true;
-
+                        if(round.checkFiftyFifty(state) == true)
+                        {
+                            if (round.confirmFiftyFifty() == 1)
+                            {
+                                while (choice == false)
+                                {
+                                    if (answer.equalsIgnoreCase("a") || answer.equalsIgnoreCase("b"))
+                                    {
+                                        correctInput = true;
+                                        state = false;
+                                        choice = true;
+                                    }
+                                    else 
+                                    {
+                                        state = true;
+                                        round.checkFiftyFifty(state);
+                                        round.fiftyFifty(roundNumber);
+                                    }
+                                }
+                            }
+                        }
                     }
                     else if(answer.equalsIgnoreCase("c") || answer.equalsIgnoreCase("d"))
                     {
-                        correctInput = true;
+                        if(round.checkFiftyFifty(state) == true)
+                        {
+                            if(round.confirmFiftyFifty() == 2)
+                            {
+                                while(choice == false)
+                                {
+                                    if(answer.equalsIgnoreCase("c") || answer.equalsIgnoreCase("d"))
+                                    {
+                                        correctInput = true;
+                                        state = false;
+                                        choice = true;
+                                    }
+                                    else
+                                    {
+                                        state = true;
+                                        round.checkFiftyFifty(state);
+                                        round.fiftyFifty(roundNumber);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            correctInput = true;
+                        }
 
                     }
 
@@ -335,23 +383,15 @@ public class MillionaireQuiz
 
                 if(round.quieryAnswer(answer, roundNumber) == true)
                 {
-                   // Thread.sleep(1000);
                     System.out.println("Correct! for $" + score(roundNumber));
 
                     if(roundNumber == 14)
                     {
-                        try {
-                            Thread.sleep(1000);
-                        }catch (InterruptedException e)
-                        {
-                            System.err.println("InterruptedException: " + e.getMessage());
-                        }
+
                         System.out.println("YOU HAVE WON A MILLION DOLLARS!!!!!!");
                         System.out.println("Congratulations!!!!");
                         System.out.println("$" + score(roundNumber));
-
                     }
-
                 }
                 else if(round.quieryAnswer(answer, roundNumber) == false)
                 {
@@ -373,9 +413,9 @@ public class MillionaireQuiz
     public static void main(String[] args) throws IOException, InterruptedException
     {
         boolean power = true;
-        //view();
+        //LOGIN_VIEW();
         MENU();
-        String name = view();
+        String name = LOGIN_VIEW();
         rules();
         game(name);
 

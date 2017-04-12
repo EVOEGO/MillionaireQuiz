@@ -13,6 +13,7 @@ import java.util.Random;
  */
 public class Round
 {
+    private int FIFTYFIFTY;
     private String a;
     private String b;
     private String c;
@@ -20,6 +21,7 @@ public class Round
     private boolean used50;
     private boolean usedAudience;
     private boolean usedPhone;
+    private boolean FIFTY_FIFTY_ACTIVE;
     private ArrayList<Integer> chances = new ArrayList<>();
     private AttributeDataBase finalGame = new AttributeDataBase();
     private ArrayList<String> questionLetters = new ArrayList<>();
@@ -118,26 +120,29 @@ public class Round
             {
                 System.out.println("A. " + quizAnswers.get(q));
                 a = quizAnswers.get(q);
-
+                questionLetters.add(a);
             }
             else if(q == 1)
             {
                 System.out.println("B. " + quizAnswers.get(q));
                 b = quizAnswers.get(q);
+                questionLetters.add(b);
             }
             if(q == 2)
             {
                 System.out.println("C. " + quizAnswers.get(q));
                 c = quizAnswers.get(q);
+                questionLetters.add(c);
             }
             else if(q == 3)
             {
                 System.out.println("D. " + quizAnswers.get(q));
                 d = quizAnswers.get(q);
+                questionLetters.add(d);
 
             }
-
         }
+        questionLetters.trimToSize();
         System.out.println("-------------------------------------------------------------");
     }
     public boolean quieryAnswer(String input, Integer round)
@@ -189,9 +194,7 @@ public class Round
                 System.out.println(finalGame.getQuestions().get(i).getQuestion());
                 System.out.println("A. " + a);
                 System.out.println("B. " + b);
-
-                checkQuestionType(c, i);
-                checkQuestionType(d, i);
+                FIFTYFIFTY = 1;
 
                 used50 = true;
                 break;
@@ -199,8 +202,9 @@ public class Round
             else if(finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(c) || finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(d))
             {
                 System.out.println(finalGame.getQuestions().get(i).getQuestion());
-                System.out.println("A. " + c);
-                System.out.println("B. " + d);
+                FIFTYFIFTY =2;
+                System.out.println("C. " + c);
+                System.out.println("D. " + d);
                 used50 = true;
                 break;
             }
@@ -232,11 +236,6 @@ public class Round
     public void askTheAudience(Integer round) {
         //ask the audience
         int i = round;
-        //boolean answer = false;
-        questionLetters.add(a);
-        questionLetters.add(b);
-        questionLetters.add(c);
-        questionLetters.add(d);
 
         for (int w = 1; w < questionLetters.size(); w++) {
             if (finalGame.getQuestion(i).getAnswer().equalsIgnoreCase(questionLetters.get(w))) {
@@ -277,11 +276,6 @@ public class Round
         int friendIsIncorrect = 40;
         int i = round;
         String username = name;
-        questionLetters.add(a);
-        questionLetters.add(b);
-        questionLetters.add(c);
-        questionLetters.add(d);
-        questionLetters.trimToSize();
 
         System.out.println(finalGame.getQuestions().get(i).getQuestion());
         printQuestions();
@@ -357,6 +351,16 @@ public class Round
         //System.out.println("\n");
     }
 
+    public boolean checkFiftyFifty(boolean active)
+    {
+        FIFTY_FIFTY_ACTIVE = active;
+        return FIFTY_FIFTY_ACTIVE;
+    }
+
+    public Integer confirmFiftyFifty()
+    {
+        return FIFTYFIFTY;
+    }
     /*Moved my print statements to a method instead to save space in my code*/
 
     public void print()
@@ -368,7 +372,7 @@ public class Round
     }
 
     /*I created the getUsed methods, so that i could check to see if the lifelines had been used
-    I found these really helpful, in my main view as i was able to check on the fly if each lifeline
+    I found these really helpful, in my main LOGIN_VIEW as i was able to check on the fly if each lifeline
     had been used or not.*/
 
     public boolean getUsed1()

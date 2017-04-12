@@ -82,8 +82,13 @@ public class highScores
                     {
                         if(HIGH_SCORES.get(x).equalsIgnoreCase(Integer.toString(SCORE_NUMBER.get(i))))
                         {
+
                             SORTED_SCORES.add(HIGH_SCORES.get(x-1));
-                            SORTED_SCORES.add(Integer.toString(SCORE_NUMBER.get(i))); //I then add them to a differnt arraylist, that i call in the view
+                            SORTED_SCORES.add(Integer.toString(SCORE_NUMBER.get(i))); //I then add them to a differnt arraylist, that i call in the LOGIN_VIEW
+                           // HIGH_SCORES.remove(HIGH_SCORES.get(x));
+                            //HIGH_SCORES.remove(HIGH_SCORES.get(x--));
+                            //SCORE_NUMBER.remove(SCORE_NUMBER.get(i));
+                            break;
                         }
                     }
                 }
@@ -97,7 +102,7 @@ public class highScores
         }
     }
 
-    /*This method gets the highscores and returns them to the view so that i can use the data
+    /*This method gets the highscores and returns them to the LOGIN_VIEW so that i can use the data
     stored inside the arraylist.*/
     public ArrayList<String> get_SORTED_SCORES()
     {
